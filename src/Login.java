@@ -1,3 +1,4 @@
+import java.io.UnsupportedEncodingException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Scanner;
@@ -7,7 +8,7 @@ public class Login {
     Connection connection;
     Scanner scanner = new Scanner(System.in);
 
-    public Login() {
+    public Login() throws UnsupportedEncodingException {
         do {
 
             try {
@@ -24,5 +25,7 @@ public class Login {
                 System.out.println("Wrong Password or account! please check again your account!");
             }
         } while (true);
+        new ShopeeProcedure(this).mainMenu();
+
     }
 }
