@@ -1,9 +1,10 @@
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Scanner;
 
 public class Login {
     String account, password;
-
+    Connection connection;
     Scanner scanner = new Scanner(System.in);
 
     public Login() {
@@ -14,7 +15,7 @@ public class Login {
                 account = Valid.isNullString();
                 System.out.print("Password : ");
                 password = Valid.isNullString();
-                Valid.getConnection(account, password);
+                connection = Valid.getConnection(account, password);
                 System.out.println("Login Success");
                 System.out.print("Enter any key to continue...");
                 scanner.nextLine();
