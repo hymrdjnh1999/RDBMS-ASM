@@ -21,7 +21,7 @@ public class ShopeeProcedure {
             System.out.println("|==================================================|");
             System.out.println("|        Below is options of sales database        |");
             System.out.println("|==================================================|");
-            System.out.println("|   1. Input product information                   |");
+            System.out.println("|   1. Insert product information                  |");
             System.out.println("|   2. Update product information                  |");
             System.out.println("|   3. Search product                              |");
             System.out.println("|   0. Exit                                        |");

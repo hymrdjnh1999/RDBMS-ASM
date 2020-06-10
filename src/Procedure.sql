@@ -19,7 +19,6 @@ begin
     set p.productName = pName, p.ProductRootPrice = pPrice, p.productSalePrice = pSalePrice
     where p.productID = id;
 end //
-
 --
 delimiter //
 create procedure updateProductPrice(in id int ,in pPrice decimal(13,2),in pSalePrice decimal(13,2) )
@@ -52,7 +51,7 @@ end //
 DELIMITER ;
 -- procedure search Product by category,name
 delimiter //
-create procedure searchProductbyCategoryName(in category nvarchar(255),in pName nvarchar(255))
+create procedure searchProductbyCategoryName(in category int,in pName nvarchar(255))
 begin
 	select  *from v_product v
     where v.categoryName like concat('%',category,'%') and  v.productName like concat('%',pName,'%'); 

@@ -21,7 +21,7 @@ public class UpdateProduct {
         System.out.println("| 1. Update Name , Price, Status                   |");
         System.out.println("| 2. Update Name                                   |");
         System.out.println("| 3. Update Price                                  |");
-        System.out.println("| 4. Update Status                                 |");
+        System.out.println("| 0. Back main menu                                |");
         System.out.println("|==================================================|");
         System.out.print("#Enter your select : ");
         updateSwitchMenu();
@@ -34,7 +34,6 @@ public class UpdateProduct {
             case "1":
             case "2":
             case "3":
-            case "4":
                 UpdateProduct.updateProductInfo(login, Integer.parseInt(select));
                 break;
             case "0":
