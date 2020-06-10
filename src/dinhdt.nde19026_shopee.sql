@@ -91,7 +91,7 @@ CREATE TABLE orders (
     orderID INT AUTO_INCREMENT,
     shippingMethodID INT,
     paymentMethodID INT,
-    shippingAddressId INT,
+    shippingAddressID INT,
     totalBill DECIMAL(13 , 2 ) NOT NULL,
     orderDate DATE,
     orderStatus ENUM('Đang Xử Lý', 'Đang Giao', 'Đã Giao', 'Đã Hủy') NOT NULL,
@@ -123,8 +123,9 @@ CREATE TABLE orderDetails (
 );
 
 -- 12 CREATE INDEX  
-CREATE INDEX name_index on product(productName);
-CREATE INDEX email_index on customer(customerEmail);
+CREATE INDEX productname_index on product(productName);
+CREATE INDEX categoryName_index on Category(CategoryName);
+CREATE INDEX productPrice_index on Product(productSalePrice);
 
 
 

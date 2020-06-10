@@ -62,6 +62,6 @@ delimiter //
 create procedure searchProductbyPriceRange(in category nvarchar(255),in pName nvarchar(255),in startPrice decimal(13,2),in endPrice decimal(13,2))
 begin
 	select *  from v_product v
-    where v.categoryName like concat('%',category,'%') and  v.productName like concat('%',pName,'%') and v.ProductRootPrice >= startPrice and v.ProductRootPrice <= endPrice;
+    where v.categoryName like concat('%',category,'%') and  v.productName like concat('%',pName,'%') and v.productSalePrice >= startPrice and v.productSale <= endPrice;
 end //
 DELIMITER ;
