@@ -3,60 +3,52 @@ import java.sql.CallableStatement;
 import java.sql.SQLException;
 import java.util.Scanner;
 
-public class ProductDAL {
-    private static String productName, productDes;
+public class UpdateProduct {
+
+    private static String productName, callStoreProcedure = "";
     private static Double productPrice, productSalePrice;
-    private static Integer quantityInStock, productID;
-    static Login login;
+    private static Integer productID;
     static Scanner scanner = new Scanner(System.in);
-    static String callStoreProcedure = "";
+    static CallableStatement callableStatement = null;
+    static Login login;
 
-    public static void insertProduct(Login login) throws UnsupportedEncodingException {
+    static void updateMenu(Login li) throws UnsupportedEncodingException {
         App.clrscr();
-        String callStoreProcedure = "{call inputInfoProduct(?,?,?,?,?)}";
-        CallableStatement cstm = null;
-        System.out.println("================================");
-        System.out.println("Insert into product");
-        System.out.println("================================");
-        try {
-            cstm = login.connection.prepareCall(callStoreProcedure);
-            System.out.print("Product Name : ");
-            productName = Validate.isNullString();
-            System.out.print("Product price : ");
-            productPrice = (Double) Validate.getTrueValue(2);
-            do {
-                System.out.print("Product sale price : ");
-                productSalePrice = (Double) Validate.getTrueValue(2);
-                if (productSalePrice > productPrice) {
-                    System.out.println("Please don't let sale price than root price");
-                } else {
-                    break;
-                }
-            } while (productSalePrice > productPrice);
-            System.out.print("Product quantity in stock : ");
-            quantityInStock = (Integer) Validate.getTrueValue(1);
-            System.out.print("Product description : ");
-            productDes = Validate.isNullString();
-            cstm.setNString(1, productName);
-            cstm.setDouble(2, productPrice);
-            cstm.setDouble(3, productSalePrice);
-            cstm.setInt(4, quantityInStock);
-            cstm.setNString(5, productDes);
-            System.out.println("================================");
-            cstm.execute();
-            System.out.println("(1) rows add");
-            System.out.println("Enter any key to back...");
-            scanner.nextLine();
-        } catch (SQLException e) {
-            System.out.println("(0) rows add");
-            System.out.println("Enter any key to back...");
-            scanner.nextLine();
-        }
-
+        login = li;
+        System.out.println("|==================================================|");
+        System.out.println("| Update Product Infomation with Product ID        |");
+        System.out.println("|==================================================|");
+        System.out.println("| 1. Update Name , Price, Status                   |");
+        System.out.println("| 2. Update Name                                   |");
+        System.out.println("| 3. Update Price                                  |");
+        System.out.println("| 4. Update Status                                 |");
+        System.out.println("|==================================================|");
+        System.out.print("#Enter your select : ");
+        updateSwitchMenu();
     }
 
-    private static void executeUpdateProductInfo(String sql, Integer select) {
-        CallableStatement callableStatement = null;
+    static void updateSwitchMenu() throws UnsupportedEncodingException {
+
+        String select = scanner.nextLine();
+        switch (select) {
+            case "1":
+            case "2":
+            case "3":
+            case "4":
+                UpdateProduct.updateProductInfo(login, Integer.parseInt(select));
+                break;
+            case "0":
+                ShopeeProcedure.mainMenu();
+                break;
+            default:
+                System.out.println("Not have your select option\nEnter any key to continue...");
+                scanner.nextLine();
+                break;
+        }
+    }
+
+    private static void executeUpdateProductInfo(String sql, Integer select, Login login) {
+
         try {
             callableStatement = login.connection.prepareCall(sql);
             switch (select) {
@@ -75,7 +67,6 @@ public class ProductDAL {
                     callableStatement.setDouble(2, productPrice);
                     callableStatement.setDouble(3, productSalePrice);
                     break;
-
             }
             callableStatement.execute();
             System.out.println("1row(s) updated");
@@ -128,11 +119,10 @@ public class ProductDAL {
 
     static void updateProductInfo(Login log, Integer select) {
         App.clrscr();
-        login = log;
         System.out.println("================================");
         System.out.println("update product information");
         System.out.println("================================");
         storeUpdateProductInfo(select);
-        executeUpdateProductInfo(callStoreProcedure, select);
+        executeUpdateProductInfo(callStoreProcedure, select, log);
     }
 }

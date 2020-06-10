@@ -30,29 +30,15 @@ public class ShopeeProcedure {
         }
     }
 
-    static void updateMenu() throws UnsupportedEncodingException {
-        App.clrscr();
-        System.out.println("|==================================================|");
-        System.out.println("| Update Product Infomation with Product ID        |");
-        System.out.println("|==================================================|");
-        System.out.println("| 1. Update Name , Price, Status                   |");
-        System.out.println("| 2. Update Name                                   |");
-        System.out.println("| 3. Update Price                                  |");
-        System.out.println("| 4. Update Status                                 |");
-        System.out.println("|==================================================|");
-        System.out.print("#Enter your select : ");
-        updateSwitchMenu();
-    }
-
     static void mainSwitchMenu() throws UnsupportedEncodingException {
         System.out.print("#Choose your option : ");
         String select = scanner.nextLine();
         switch (select) {
             case "1":
-                ProductDAL.insertProduct(login);
+                InsertProduct.insertProduct(login);
                 break;
             case "2":
-                updateMenu();
+                UpdateProduct.updateMenu(login);
                 break;
             case "3":
                 break;
@@ -66,23 +52,4 @@ public class ShopeeProcedure {
         }
     }
 
-    static void updateSwitchMenu() throws UnsupportedEncodingException {
-
-        String select = scanner.nextLine();
-        switch (select) {
-            case "1":
-            case "2":
-            case "3":
-            case "4":
-                ProductDAL.updateProductInfo(login, Integer.parseInt(select));
-                break;
-            case "0":
-                mainMenu();
-                break;
-            default:
-                System.out.println("Not have your select option\nEnter any key to continue...");
-                scanner.nextLine();
-                break;
-        }
-    }
 }
