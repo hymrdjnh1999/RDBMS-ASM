@@ -87,11 +87,11 @@ CREATE TABLE shippingMethod (
     PRIMARY KEY (shippingMethodID)
 );
 -- 10.create table order 
-CREATE TABLE orders (
+CREATE TABLE orders(
     orderID INT AUTO_INCREMENT,
     shippingMethodID INT,
     paymentMethodID INT,
-    shippingAddressID INT,
+    customerID INT,
     totalBill DECIMAL(13 , 2 ) NOT NULL,
     orderDate DATE,
     orderStatus ENUM('Đang Xử Lý', 'Đang Giao', 'Đã Giao', 'Đã Hủy') NOT NULL,
@@ -102,8 +102,8 @@ CREATE TABLE orders (
     FOREIGN KEY (paymentMethodID)
         REFERENCES paymentMethod (paymentMethodID)
         ON DELETE CASCADE,
-    FOREIGN KEY (shippingAddressID)
-        REFERENCES shippingAddress (shippingAddressID)
+    FOREIGN KEY (customerID)
+        REFERENCES customer (customerID)
         ON DELETE CASCADE
 );
 -- 11.create table orderDetails
@@ -1545,14 +1545,6 @@ INSERT INTO orderDetails VALUES ('75', '50', '5', '325000', '1');
 INSERT INTO orderDetails VALUES ('79', '50', '5', '50000', '1');
 INSERT INTO orderDetails VALUES ('21', '50', '5', '4417500', '1');
 
--- create view
-CREATE VIEW v_product
-AS SELECT c.categoryName,p.productName, p.ProductRootPrice,p.productSalePrice,p.productQuantityInStock,p.quantitySold,concat(substring(p.productDescription,1,10),'...') as `Sort Description`,p.productRate
-FROM category c inner join productCategory pc on pc.categoryID = c.categoryID inner join product p on p.productID = pc.productID;
-
-CREATE VIEW v_orderDetails
-AS SELECT c.CustomerName,c.customerAddress,concat(o.totalbill,' Đồng') totalBill,o.orderDate ,sa.AddressDetails `Receive Address`,sm.shippingName,pm.paymentMethodName,o.orderStatus
-FROM orders o inner join shippingMethod sm on sm.shippingMethodID = o.shippingMethodID inner join paymentMethod pm on pm.paymentMethodID = o.paymentMethodID inner join shippingAddress sa on sa.shippingAddressID = o.shippingAddressID inner join Customer c on c.customerID = sa.CustomerID;
 
 
 
