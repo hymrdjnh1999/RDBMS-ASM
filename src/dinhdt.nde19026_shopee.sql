@@ -1,5 +1,5 @@
 /*	1. Create database Shopee*/
--- drop database if exists shopee;
+drop database if exists shopee;
 create database if not exists shopee;
 
 -- 2. user shopee database
@@ -10,20 +10,21 @@ CREATE TABLE category (
     categoryName NVARCHAR(255) NOT NULL UNIQUE,
     PRIMARY KEY (categoryID)
 );
-
 /*	4. Create table product*/
 CREATE TABLE product (
     productID INT AUTO_INCREMENT,
     productName NVARCHAR(255) NOT NULL,
-    productPrice DECIMAL(13 , 2 ) NOT NULL,
+    ProductRootPrice DECIMAL(13 , 2 ) NOT NULL,
     productSalePrice DECIMAL(13 , 2 ) NOT NULL,
     productQuantityInStock NVARCHAR(255) NOT NULL,
-    quantitySold INT NOT NULL,
+    quantitySold INT NOT NULL DEFAULT 0,
     productDescription TEXT NOT NULL,
     productRate DECIMAL(2 , 1 ) DEFAULT 0.0,
-    productStatus enum('Còn Hàng','Bán Hết','Không Còn Kinh Doanh') NOT NULL,
+    productStatus enum('Còn Hàng','Bán Hết','Không Còn Kinh Doanh') NOT NULL DEFAULT 'Còn Hàng', 
     PRIMARY KEY (productID)
 );
+create table productHistoryUpdate as select p.productID ,p.productName , p.ProductRootPrice, p.productSalePrice,p.productQuantityInStock from product p;
+alter table productHistoryUpdate add column updateTime datetime;
 -- 4.1 Create productCategory
 CREATE TABLE productCategory (
     categoryID INT,
@@ -110,7 +111,7 @@ CREATE TABLE orderDetails (
     productID INT,
     orderID INT,
     productAmount INT NOT NULL,
-    productPrice DECIMAL(13 , 2 ) NOT NULL,
+    ProductRootPrice DECIMAL(13 , 2 ) NOT NULL,
     quantity_of_product INT NOT NULL,
     PRIMARY KEY (productID , orderID),
     FOREIGN KEY (orderID)
@@ -1545,155 +1546,23 @@ INSERT INTO orderDetails VALUES ('21', '50', '5', '4417500', '1');
 
 -- create view
 CREATE VIEW v_product
-AS SELECT c.categoryName,p.productName, p.productPrice,p.productSalePrice,p.productQuantityInStock,p.quantitySold,concat(substring(p.productDescription,1,10),'...') as `Sort Description`,p.productRate
+AS SELECT c.categoryName,p.productName, p.ProductRootPrice,p.productSalePrice,p.productQuantityInStock,p.quantitySold,concat(substring(p.productDescription,1,10),'...') as `Sort Description`,p.productRate
 FROM category c inner join productCategory pc on pc.categoryID = c.categoryID inner join product p on p.productID = pc.productID;
-select * from v_product;
 
 CREATE VIEW v_orderDetails
 AS SELECT c.CustomerName,c.customerAddress,concat(o.totalbill,' Đồng') totalBill,o.orderDate ,sa.AddressDetails `Receive Address`,sm.shippingName,pm.paymentMethodName,o.orderStatus
 FROM orders o inner join shippingMethod sm on sm.shippingMethodID = o.shippingMethodID inner join paymentMethod pm on pm.paymentMethodID = o.paymentMethodID inner join shippingAddress sa on sa.shippingAddressID = o.shippingAddressID inner join Customer c on c.customerID = sa.CustomerID;
 
 
--- procedure input infor product
-delimiter //
-create procedure inputInfoProduct(in productName nvarchar(255),in productPrice decimal(13,2), in productSalePrice decimal(13,2), in productQuantityInStock int, in quantitySold int , in productDescription nvarchar(255),in productStatus nvarchar(30))
-begin	
-	INSERT INTO product(productName,productPrice,productSalePrice,productQuantityInStock,quantitySold,productDescription,productStatus)
-    values(productName,productPrice,productSalePrice,productQuantityInStock,quantitySold,productDescription,productStatus);
-end //
-DELIMITER ;
--- procedure update infor product
-delimiter //
-create procedure updateAllInforProduct(in id int ,in productName nvarchar(255),in Price decimal(13,2), in SalePrice decimal(13,2), in QuantityInStock int, in quantitySold int , in pDescription nvarchar(255),in Rate decimal(2,1),in pStatus nvarchar(30))
-begin
-	update product p
-    set p.productName = productName,p.prodcutPrice = price,p.productSalePrice = salePrice, p.productQuantityInStock =  quantityInStock, p.quantitySold = quantitySold ,p.productDescription = pDescription, p.productRate = rate, p.productStatus = pStatus
-    where p.productID = id;
-end //
-DELIMITER ;
--- procedure update product price with ID
-delimiter //
-create procedure updateProductPrice(in id int ,in price decimal(13,2))
-begin
-	update product p
-    set p.productPrice = price
-    where p.productID = id;
-end //
-DELIMITER ;
--- procedure update product Sale price with ID
-delimiter //
-create procedure updateProductSalePrice(in id int ,in price decimal(13,2))
-begin
-	update product p
-    set p.productSalePrice = price
-    where p.productID = id;
-end //
-DELIMITER ;
--- procedure update product quantity in stock with ID
-delimiter //
-create procedure updateProducQuantityInStock(in id int ,in quantity int)
-begin
-	update product p
-    set p.productQuantityInstock = quantity
-    where p.productID = id;
-end //
-DELIMITER ;
--- procedure update product quantity sold with ID
-delimiter //
-create procedure updateProductQuantitySold(in id int ,in quantity int)
-begin
-	update product p
-    set p.quantitySold = quantity
-    where p.productID = id;
-end //
-DELIMITER ;
--- procedure search Product By Name
-delimiter //
-create procedure searchProductByName(in pName nvarchar(255))
-begin
-	select * from v_product v
-    where v.productName like concat('%',pName,'5') 
-    limit 20;
-end //
-DELIMITER ;
--- procedure search Product by category,name
-delimiter //
-create procedure searchProductbyCategoryName(in category nvarchar(255),in pName nvarchar(255))
-begin
-	select  *from v_product v
-    where v.categoryName like concat('%',category,'%') and  v.productName like concat('%',pName,'%'); 
-end //
--- procedure search Product by category,name,price range
-delimiter //
-create procedure searchProductbyPriceRange(in category nvarchar(255),in pName nvarchar(255),in startPrice decimal(13,2),in endPrice decimal(13,2))
-begin
-	select *  from v_product v
-    where v.categoryName like concat('%',category,'%') and  v.productName like concat('%',pName,'%') and v.productPrice >= startPrice and v.productPrice <= endPrice;
-end //
-DELIMITER ;
 
 
 
 
--- trigger check on product
-
-delimiter $$
-CREATE 
-    TRIGGER  tg_checkonProduct
- BEFORE INSERT on product FOR EACH ROW 
-    BEGIN
-    IF NEW.productPrice <0  THEN
-    SET NEW .  productPrice = 0;
-    END IF ;
-    IF NEW.productSalePrice < 0 THEN
-    SET NEW .  productSalePrice = 0;
-    END IF ;
-    IF NEW.productQuantityInStock < 0 THEN
-    SET NEW .  productQuantityInStock = 0;
-    END IF ;
-    END $$
-    -- trigger check phoneNumber
-DELIMITER ;
-
-delimiter $$
-CREATE 
-    TRIGGER  tg_checkPhoneNumber
- BEFORE INSERT on customer FOR EACH ROW 
-    BEGIN
-    IF NEW.customerPhoneNumber NOT LIKE '0_________' THEN
-	SIGNAL SQLSTATE '25211' SET MESSAGE_TEXT =  'is not phone number!';
-    END IF ;
-    END $$
-DELIMITER ;
-
-delimiter $$
-CREATE 
-    TRIGGER reportUpdateProfile
-	AFTER INSERT on customer FOR EACH ROW 
-    BEGIN
-    IF NEW.customerEmail IS NULL THEN
-	SIGNAL SQLSTATE '45502' SET MESSAGE_TEXT =  'Please update your profile';
-    END IF ;
-    END $$
-DELIMITER ;
-
--- Create table history update infor product
-create table productHistoryUpdate as select p.productName , p.productPrice, p.productSalePrice,p.productQuantityInStock from product p;
-
-delimiter $$
-CREATE 
-    TRIGGER tg_historyUpdate
-	AFTER UPDATE ON product FOR EACH ROW 
-    BEGIN
-    insert into productHistoryUpdate values(old.productName,old.productPrice,old.productSalePrice,old.productQuantityInStock);
-    END $$
-DELIMITER ;
 
 
-select * from v_orderDetails;
+
 
 
     
 
-    
 

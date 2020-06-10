@@ -13,10 +13,10 @@ public class Login {
 
             try {
                 System.out.print("Account : ");
-                account = Valid.isNullString();
+                account = Validate.isNullString();
                 System.out.print("Password : ");
-                password = Valid.isNullString();
-                connection = Valid.getConnection(account, password);
+                password = Validate.isNullString();
+                connection = Validate.getConnection(account, password);
                 System.out.println("Login Success");
                 System.out.print("Enter any key to continue...");
                 scanner.nextLine();

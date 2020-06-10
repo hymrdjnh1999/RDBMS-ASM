@@ -1,7 +1,11 @@
 {
   "java.project.referencedLibraries": [
     "lib/**/*.jar",
-    "c:\\Users\\Admin\\OneDrive\\Desktop\\mysql-connector-java-8.0.20\\mysql-connector-java-8.0.20\\mysql-connector-java-8.0.20.jar"
+    "c:\\Users\\Admin\\OneDrive\\Desktop\\mysql-connector-java-8.0.20\\mysql-connector-java-8.0.20\\mysql-connector-java-8.0.20.jar",
+    "d:\\Download\\mysql-connector-java-8.0.19\\mysql-connector-java-8.0.19.jar"
   ],
-  "terminal.integrated.shell.windows": "C:\\Windows\\system32\\cmd.exe \\K chcp 65001"
+  "[powershell]": {
+    "files.encoding": "utf8bom",
+    "files.autoGuessEncoding": true
+    }
 }
