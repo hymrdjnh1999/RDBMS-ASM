@@ -45,22 +45,22 @@ delimiter //
 create procedure searchProductByName(in pName nvarchar(255))
 begin
 	select * from v_product v
-    where v.productName like concat('%',pName,'5') 
+    where v.SortName like concat('%',pName,'%') 
     limit 20;
 end //
 DELIMITER ;
 -- procedure search Product by category,name
 delimiter //
-create procedure searchProductbyCategoryName(in category int,in pName nvarchar(255))
+create procedure searchProductbyCategoryName(in category nvarchar(255),in pName nvarchar(255))
 begin
 	select  *from v_product v
-    where v.categoryName like concat('%',category,'%') and  v.productName like concat('%',pName,'%'); 
+    where v.categoryName like concat('%',category,'%') and  v.SortName like concat('%',pName,'%'); 
 end //
 -- procedure search Product by category,name,price range
 delimiter //
-create procedure searchProductbyPriceRange(in category nvarchar(255),in pName nvarchar(255),in startPrice decimal(13,2),in endPrice decimal(13,2))
+create procedure searchProductbyPriceRange(in pName nvarchar(255),in category nvarchar(255),in startPrice decimal(13,2),in endPrice decimal(13,2))
 begin
 	select *  from v_product v
-    where v.categoryName like concat('%',category,'%') and  v.productName like concat('%',pName,'%') and v.productSalePrice >= startPrice and v.productSale <= endPrice;
+    where v.categoryName like concat('%',category,'%') and  v.SortName like concat('%',pName,'%') and v.productSalePrice >= startPrice and v.productSalePrice <= endPrice;
 end //
 DELIMITER ;

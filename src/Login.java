@@ -8,7 +8,7 @@ public class Login {
     Connection connection;
     Scanner scanner = new Scanner(System.in);
 
-    public Login() throws UnsupportedEncodingException {
+    public Login() throws UnsupportedEncodingException, NumberFormatException, SQLException {
         do {
 
             try {

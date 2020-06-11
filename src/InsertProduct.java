@@ -36,11 +36,11 @@ public class InsertProduct {
             quantityInStock = (Integer) Validate.getTrueValue(1);
             System.out.print("Product description : ");
             productDes = Validate.isNullString();
-            cstm.setNString(1, productName);
+            cstm.setString(1, productName);
             cstm.setDouble(2, productPrice);
             cstm.setDouble(3, productSalePrice);
             cstm.setInt(4, quantityInStock);
-            cstm.setNString(5, productDes);
+            cstm.setString(5, productDes);
             System.out.println("================================");
             cstm.execute();
             System.out.println("(1) rows add");

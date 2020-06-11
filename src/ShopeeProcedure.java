@@ -1,4 +1,5 @@
 import java.io.UnsupportedEncodingException;
+import java.sql.SQLException;
 import java.util.Scanner;
 
 public class ShopeeProcedure {
@@ -13,7 +14,7 @@ public class ShopeeProcedure {
 
     };
 
-    public static void mainMenu() throws UnsupportedEncodingException {
+    public static void mainMenu() throws UnsupportedEncodingException, NumberFormatException, SQLException {
         while (true) {
             App.clrscr();
             System.out.println("|==================================================|");
@@ -30,7 +31,7 @@ public class ShopeeProcedure {
         }
     }
 
-    static void mainSwitchMenu() throws UnsupportedEncodingException {
+    static void mainSwitchMenu() throws UnsupportedEncodingException, NumberFormatException, SQLException {
         System.out.print("#Choose your option : ");
         String select = scanner.nextLine();
         switch (select) {
@@ -41,6 +42,7 @@ public class ShopeeProcedure {
                 UpdateProduct.updateMenu(login);
                 break;
             case "3":
+                SearchProduct.SearchMenu(login);
                 break;
             case "0":
                 System.exit(0);

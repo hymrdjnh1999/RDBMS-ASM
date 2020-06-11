@@ -2,7 +2,7 @@
 CREATE VIEW v_product AS
     SELECT 
         c.categoryName,
-        p.productName,
+        CONCAT(SUBSTRING(p.productName,1,10),'...') SortName,
         p.ProductRootPrice,
         p.productSalePrice,
         p.productQuantityInStock,

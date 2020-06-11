@@ -54,7 +54,7 @@ public class Validate {
 
     public static Connection getConnection(final String user, final String password) throws SQLException {
 
-        final String url = "jdbc:mysql://localhost:3306/shopee";
+        final String url = "jdbc:mysql://localhost:3306/shopee?useUnicode=true&characterEncoding=UTF-8";
         Connection connection = null;
         connection = DriverManager.getConnection(url, user, password);
         return connection;

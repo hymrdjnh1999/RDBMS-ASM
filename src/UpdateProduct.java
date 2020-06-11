@@ -12,22 +12,24 @@ public class UpdateProduct {
     static CallableStatement callableStatement = null;
     static Login login;
 
-    static void updateMenu(Login li) throws UnsupportedEncodingException {
-        App.clrscr();
+    static void updateMenu(Login li) throws UnsupportedEncodingException, NumberFormatException, SQLException {
         login = li;
-        System.out.println("|==================================================|");
-        System.out.println("| Update Product Infomation with Product ID        |");
-        System.out.println("|==================================================|");
-        System.out.println("| 1. Update Name , Price, Status                   |");
-        System.out.println("| 2. Update Name                                   |");
-        System.out.println("| 3. Update Price                                  |");
-        System.out.println("| 0. Back main menu                                |");
-        System.out.println("|==================================================|");
-        System.out.print("#Enter your select : ");
-        updateSwitchMenu();
+        while (true) {
+            App.clrscr();
+            System.out.println("|==================================================|");
+            System.out.println("| Update Product Infomation with Product ID        |");
+            System.out.println("|==================================================|");
+            System.out.println("| 1. Update Name , Price, Status                   |");
+            System.out.println("| 2. Update Name                                   |");
+            System.out.println("| 3. Update Price                                  |");
+            System.out.println("| 0. Back main menu                                |");
+            System.out.println("|==================================================|");
+            System.out.print("#Enter your select : ");
+            updateSwitchMenu();
+        }
     }
 
-    static void updateSwitchMenu() throws UnsupportedEncodingException {
+    static void updateSwitchMenu() throws UnsupportedEncodingException, NumberFormatException, SQLException {
 
         String select = scanner.nextLine();
         switch (select) {
@@ -72,6 +74,7 @@ public class UpdateProduct {
             System.out.println("Enter any key to back...");
             scanner.nextLine();
         } catch (SQLException e) {
+            e.printStackTrace();
             System.out.println("0row(s) updated");
             System.out.println("Enter any key to back...");
             scanner.nextLine();
@@ -83,7 +86,7 @@ public class UpdateProduct {
         productID = (Integer) Validate.getTrueValue(1);
         switch (select) {
             case 1:
-                callStoreProcedure = "{call updateProductInfo(?,?,?,?   )}";
+                callStoreProcedure = "{call updateProductInfo(?,?,?,?)}";
                 System.out.print("Product Name : ");
                 productName = Validate.isNullString();
                 System.out.print("Product price : ");
@@ -91,10 +94,10 @@ public class UpdateProduct {
                 do {
                     System.out.print("Product sale price : ");
                     productSalePrice = (Double) Validate.getTrueValue(2);
-                    if (productSalePrice < productPrice) {
+                    if (productSalePrice > productPrice) {
                         System.out.println("Please don't let sale price than root price");
                     }
-                } while (productSalePrice < productPrice);
+                } while (productSalePrice > productPrice);
                 break;
             case 2:
                 callStoreProcedure = "{call updateProductName(?,?)}";
@@ -102,16 +105,16 @@ public class UpdateProduct {
                 productName = Validate.isNullString();
                 break;
             case 3:
-                callStoreProcedure = "{call updateProductName(?,?,?)}";
+                callStoreProcedure = "{call updateProductPrice(?,?,?)}";
                 System.out.print("Product price : ");
                 productPrice = (Double) Validate.getTrueValue(2);
                 do {
                     System.out.print("Product sale price : ");
                     productSalePrice = (Double) Validate.getTrueValue(2);
-                    if (productSalePrice < productPrice) {
+                    if (productSalePrice > productPrice) {
                         System.out.println("Please don't let sale price than root price");
                     }
-                } while (productSalePrice < productPrice);
+                } while (productSalePrice > productPrice);
                 break;
         }
     }

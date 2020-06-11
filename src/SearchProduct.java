@@ -12,28 +12,32 @@ public class SearchProduct {
     static CallableStatement callableStatement = null;
     static Login login;
 
-    static void SearchMenu(Login li) throws UnsupportedEncodingException {
-        App.clrscr();
+    static void SearchMenu(Login li) throws UnsupportedEncodingException, NumberFormatException, SQLException {
         login = li;
-        System.out.println("|==================================================|");
-        System.out.println("|               Search product menu                |");
-        System.out.println("|==================================================|");
-        System.out.println("| 1. Search by category                            |");
-        System.out.println("| 2. Search by category,name                       |");
-        System.out.println("| 3. Search by category,name,range price           |");
-        System.out.println("|==================================================|");
-        System.out.print("#Enter your select : ");
-        searchSwitchMenu();
+        while (true) {
+            App.clrscr();
+            System.out.println("|==============================================|");
+            System.out.println("|               Search product menu            |");
+            System.out.println("|==============================================|");
+            System.out.println("| 1. Search by name                            |");
+            System.out.println("| 2. Search by category,name                   |");
+            System.out.println("| 3. Search by category,name,range price       |");
+            System.out.println("| 0. Back to main menu                         |");
+            System.out.println("|==============================================|");
+            System.out.print("#Enter your select : ");
+            searchSwitchMenu();
+        }
+
     }
 
-    static void searchSwitchMenu() throws UnsupportedEncodingException {
+    static void searchSwitchMenu() throws UnsupportedEncodingException, NumberFormatException, SQLException {
 
         String select = scanner.nextLine();
         switch (select) {
             case "1":
             case "2":
             case "3":
-                UpdateProduct.updateProductInfo(login, Integer.parseInt(select));
+                storeProcedure(Integer.parseInt(select));
                 break;
             case "0":
                 ShopeeProcedure.mainMenu();
@@ -45,35 +49,34 @@ public class SearchProduct {
         }
     }
 
-    static void storeProcedure(Integer select) {
-        System.out.println("Product Name : ");
+    static void storeProcedure(Integer select) throws SQLException {
+        System.out.print("Product Name : ");
         productName = Validate.isNullString();
         switch (select) {
             case 1:
                 callStoreProcedure = "{call searchProductByName(?)}";
                 break;
             case 2:
-                callStoreProcedure = "{call searchProductByName(?,?)}";
-                System.out.println("Product Name : ");
-                productName = Validate.isNullString();
-                System.out.println("Category Name : ");
+                callStoreProcedure = "{call searchProductbyCategoryName(?,?)}";
+                System.out.print("Category Name : ");
                 categoryName = Validate.isNullString();
                 break;
             case 3:
-                callStoreProcedure = "{call searchProductByName(?,?,?,?)}";
-                System.out.println("Product Name : ");
-                productName = Validate.isNullString();
-                System.out.println("Category Name : ");
+                callStoreProcedure = "{call searchProductbyPriceRange(?,?,?,?)}";
+                System.out.print("Category Name : ");
                 categoryName = Validate.isNullString();
                 System.out.print("Product price range start  : ");
                 productStartRange = (Double) Validate.getTrueValue(2);
+                System.out.print("Product price range end  : ");
+                productEndRange = (Double) Validate.getTrueValue(3);
                 break;
             default:
                 break;
         }
+        executeSearchProduct(callStoreProcedure, select, login);
     }
 
-    static void executeSearchProduct(String sql, Integer select, Login login) {
+    static void executeSearchProduct(String sql, Integer select, Login login) throws SQLException {
         try {
             callableStatement = login.connection.prepareCall(sql);
             switch (select) {
@@ -96,27 +99,33 @@ public class SearchProduct {
                     }
                     break;
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
+            scanner.nextLine();
         }
+        ResultOfQuery(callableStatement);
     }
 
-    static void ResultOfQuery(CallableStatement call, Integer select) throws SQLException {
+    static void ResultOfQuery(CallableStatement call) throws SQLException {
         ResultSet rs = call.executeQuery();
-        // System.out.printf());
-        if (select.equals(1))
-            while (rs.next()) {
-
-            }
-        else if (select.equals(2))
-            while (rs.next()) {
-
-            }
-        else
-            while (rs.next()) {
-
-            }
+        Integer rowsCount = 0;
+        System.out.println(
+                "=================================================================================================================================================");
+        System.out.printf("| %-20s | %-15s | %-15s | %-15s | %-10s | %-10s | %-20s | %-10s | \n", "Category",
+                "Name Sort", "Root Price", "Sale Price", "Quantity", "Sold", "Des Sort", "Rate");
+        System.out.println(
+                "=================================================================================================================================================");
+        while (rs.next()) {
+            System.out.printf("| %-20s | %-15s | %-15.0f | %-15.0f | %-10d | %-10d | %-20s | %-10.1f |\n",
+                    rs.getString(1), rs.getString(2), rs.getDouble(3), rs.getDouble(4), rs.getInt(5), rs.getInt(6),
+                    rs.getString(7), rs.getDouble(8));
+            rowsCount++;
+        }
+        System.out.println(
+                "=================================================================================================================================================");
+        System.out.println(rowsCount + " row(s) returned!");
+        System.out.print("Enter any key to back main menu...");
+        scanner.nextLine();
 
     }
 
