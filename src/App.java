@@ -1,12 +1,13 @@
-﻿import java.io.IOException;
+﻿
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.Scanner;
 
 public class App {
     public static void main(String[] args) throws UnsupportedEncodingException {
-        // new Login();
-        String s = new Scanner(System.in).nextLine();
-        System.out.println(s);
+        new Login();
+        // String s = new Scanner(System.in).nextLine();
+        // System.out.println(s);
 
     }
 
