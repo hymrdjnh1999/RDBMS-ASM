@@ -6,8 +6,7 @@ import java.sql.ResultSet;
 
 public class SearchProduct {
     private static String productName, callStoreProcedure = "", categoryName;
-    private static Double productStartRange, productEndRange, productRate, productStatus;
-    private static Integer productID;
+    private static Double productStartRange, productEndRange;
     static Scanner scanner = new Scanner(System.in);
     static CallableStatement callableStatement = null;
     static Login login;
@@ -15,7 +14,7 @@ public class SearchProduct {
     static void SearchMenu(Login li) throws UnsupportedEncodingException, NumberFormatException, SQLException {
         login = li;
         while (true) {
-            App.clrscr();
+            Program.clrscr();
             System.out.println("|==============================================|");
             System.out.println("|               Search product menu            |");
             System.out.println("|==============================================|");
@@ -40,7 +39,7 @@ public class SearchProduct {
                 storeProcedure(Integer.parseInt(select));
                 break;
             case "0":
-                ShopeeProcedure.mainMenu();
+                ProcessMenu.mainMenu();
                 break;
             default:
                 System.out.println("Not have your select option\nEnter any key to continue...");
@@ -84,8 +83,8 @@ public class SearchProduct {
                     callableStatement.setString(1, productName);
                     break;
                 case 2:
-                    callableStatement.setString(1, productName);
-                    callableStatement.setString(2, categoryName);
+                    callableStatement.setString(1, categoryName);
+                    callableStatement.setString(2, productName);
                     break;
                 case 3:
                     callableStatement.setString(1, productName);
@@ -101,6 +100,7 @@ public class SearchProduct {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            System.out.print("Enter any key to continue...");
             scanner.nextLine();
         }
         ResultOfQuery(callableStatement);

@@ -2,21 +2,21 @@ import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
 import java.util.Scanner;
 
-public class ShopeeProcedure {
+public class ProcessMenu {
     static Scanner scanner = new Scanner(System.in);
     static Login login;
 
-    public ShopeeProcedure(Login log) {
+    public ProcessMenu(Login log) {
         login = log;
     }
 
-    public ShopeeProcedure() {
+    public ProcessMenu() {
 
     };
 
     public static void mainMenu() throws UnsupportedEncodingException, NumberFormatException, SQLException {
         while (true) {
-            App.clrscr();
+            Program.clrscr();
             System.out.println("|==================================================|");
             System.out.println("| Hello! Here is Sales Data create by Voi Be Nho^^ |");
             System.out.println("|==================================================|");

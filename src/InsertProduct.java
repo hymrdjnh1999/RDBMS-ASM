@@ -11,7 +11,7 @@ public class InsertProduct {
     static String callStoreProcedure = "";
 
     public static void insertProduct(Login login) throws UnsupportedEncodingException {
-        App.clrscr();
+        Program.clrscr();
         String callStoreProcedure = "{call inputInfoProduct(?,?,?,?,?)}";
         CallableStatement cstm = null;
         System.out.println("================================");
@@ -19,23 +19,7 @@ public class InsertProduct {
         System.out.println("================================");
         try {
             cstm = login.connection.prepareCall(callStoreProcedure);
-            System.out.print("Product Name : ");
-            productName = Validate.isNullString();
-            System.out.print("Product price : ");
-            productPrice = (Double) Validate.getTrueValue(2);
-            do {
-                System.out.print("Product sale price : ");
-                productSalePrice = (Double) Validate.getTrueValue(2);
-                if (productSalePrice > productPrice) {
-                    System.out.println("Please don't let sale price than root price");
-                } else {
-                    break;
-                }
-            } while (productSalePrice > productPrice);
-            System.out.print("Product quantity in stock : ");
-            quantityInStock = (Integer) Validate.getTrueValue(1);
-            System.out.print("Product description : ");
-            productDes = Validate.isNullString();
+            inputParameter();
             cstm.setString(1, productName);
             cstm.setDouble(2, productPrice);
             cstm.setDouble(3, productSalePrice);
@@ -52,6 +36,26 @@ public class InsertProduct {
             scanner.nextLine();
         }
 
+    }
+
+    static void inputParameter() {
+        System.out.print("Product Name : ");
+        productName = Validate.isNullString();
+        System.out.print("Product price : ");
+        productPrice = (Double) Validate.getTrueValue(2);
+        do {
+            System.out.print("Product sale price : ");
+            productSalePrice = (Double) Validate.getTrueValue(2);
+            if (productSalePrice > productPrice) {
+                System.out.println("Please don't let sale price than root price");
+            } else {
+                break;
+            }
+        } while (productSalePrice > productPrice);
+        System.out.print("Product quantity in stock : ");
+        quantityInStock = (Integer) Validate.getTrueValue(1);
+        System.out.print("Product description : ");
+        productDes = Validate.isNullString();
     }
 
 }

@@ -10,7 +10,6 @@ public class Login {
 
     public Login() throws UnsupportedEncodingException, NumberFormatException, SQLException {
         do {
-
             try {
                 System.out.print("Account : ");
                 account = Validate.isNullString();
@@ -25,7 +24,7 @@ public class Login {
                 System.out.println("Wrong Password or account! please check again your account!");
             }
         } while (true);
-        new ShopeeProcedure(this).mainMenu();
+        new ProcessMenu(this).mainMenu();
 
     }
 }

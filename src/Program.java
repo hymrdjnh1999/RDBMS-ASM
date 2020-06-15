@@ -1,18 +1,10 @@
-﻿
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
-import java.util.Scanner;
 
-public class App {
-    public static void main(String[] args) throws UnsupportedEncodingException {
-        try {
-            new Login();
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+public class Program {
+    public static void main(String[] args) throws UnsupportedEncodingException, NumberFormatException, SQLException {
+        new Login();
 
     }
 

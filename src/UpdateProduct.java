@@ -15,7 +15,7 @@ public class UpdateProduct {
     static void updateMenu(Login li) throws UnsupportedEncodingException, NumberFormatException, SQLException {
         login = li;
         while (true) {
-            App.clrscr();
+            Program.clrscr();
             System.out.println("|==================================================|");
             System.out.println("| Update Product Infomation with Product ID        |");
             System.out.println("|==================================================|");
@@ -39,7 +39,7 @@ public class UpdateProduct {
                 UpdateProduct.updateProductInfo(login, Integer.parseInt(select));
                 break;
             case "0":
-                ShopeeProcedure.mainMenu();
+                ProcessMenu.mainMenu();
                 break;
             default:
                 System.out.println("Not have your select option\nEnter any key to continue...");
@@ -120,7 +120,7 @@ public class UpdateProduct {
     }
 
     static void updateProductInfo(Login log, Integer select) {
-        App.clrscr();
+        Program.clrscr();
         System.out.println("================================");
         System.out.println("update product information");
         System.out.println("================================");

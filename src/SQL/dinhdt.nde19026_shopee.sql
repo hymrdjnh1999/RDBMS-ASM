@@ -134,10 +134,6 @@ CREATE TABLE orderDetails (
         ON DELETE CASCADE
 );
 
--- 12 CREATE INDEX  
-CREATE INDEX productname_index on product(productName);
-CREATE INDEX categoryName_index on Category(CategoryName);
-CREATE INDEX productPrice_index on Product(productSalePrice);
 
 
 
@@ -975,7 +971,7 @@ INSERT INTO productoption  	VALUES ('40', '169', 'https://cf.shopee.vn/file/6b98
 INSERT INTO productoption  	VALUES ('40', '170', '40');
 INSERT INTO productoption  	VALUES ('40', '171', '41');
 -- product 41
-INSERT INTO  product VALUES ('41','Quần shorts  nữ, quần đùi đũi cạp chun - QDD - SLIKY', '75000.00', '55750.00', '10733', '4985', '💥 LƯU Ý 💥: SHOP KHÔNG NHẬN ĐẶT ĐƠN QUÁ GHI CHÚ VÀ TIN NHẮN. DO PHẦN MÊM IN ĐƠN CỦA SHOPEE KHÔNG HIỂN THỊ. MONG QUÝ KHÁCH THÔNG CẢM ❗️ VUI LÒNG CHỌN ĐÚNG PHÂN LOẠI QUÝ KHÁCH MUỐN MUA Ạ.', '4.9', 'Còn Hàng');
+INSERT INTO  product VALUES ('41','Quần shorts  nữ, quần đùi đũi cạp chun - QDD - SLIKY', '75000.00', '55750.00', '10733', '4985', ' LƯU Ý : SHOP KHÔNG NHẬN ĐẶT ĐƠN QUÁ GHI CHÚ VÀ TIN NHẮN. DO PHẦN MÊM IN ĐƠN CỦA SHOPEE KHÔNG HIỂN THỊ. MONG QUÝ KHÁCH THÔNG CẢM ❗️ VUI LÒNG CHỌN ĐÚNG PHÂN LOẠI QUÝ KHÁCH MUỐN MUA Ạ.', '4.9', 'Còn Hàng');
 INSERT INTO  optiongroup  VALUES ('172', 'Image');
 INSERT INTO  optiongroup  VALUES ('173', 'Image');
 INSERT INTO  optiongroup  VALUES ('174', 'Màu');
