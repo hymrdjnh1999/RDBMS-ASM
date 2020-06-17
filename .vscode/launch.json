@@ -8,6 +8,13 @@
             "type": "java",
             "name": "CodeLens (Launch) - Program",
             "request": "launch",
+            "mainClass": "app.Program",
+            "projectName": "RDBMS-ASM_e6f4a92e"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - Program",
+            "request": "launch",
             "mainClass": "Program",
             "projectName": "RDBMS_ASM_8e6958e7"
         },
