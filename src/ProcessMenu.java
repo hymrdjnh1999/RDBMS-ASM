@@ -16,7 +16,7 @@ public class ProcessMenu {
 
     public static void mainMenu() throws UnsupportedEncodingException, NumberFormatException, SQLException {
         while (true) {
-            Program.clrscr();
+            ClearScreen.clrscr();
             System.out.println("|==================================================|");
             System.out.println("| Hello! Here is Sales Data create by Voi Be Nho^^ |");
             System.out.println("|==================================================|");
@@ -25,6 +25,7 @@ public class ProcessMenu {
             System.out.println("|   1. Insert product information                  |");
             System.out.println("|   2. Update product information                  |");
             System.out.println("|   3. Search product                              |");
+            System.out.println("|   4. Show Product                                |");
             System.out.println("|   0. Exit                                        |");
             System.out.println("|==================================================|");
             mainSwitchMenu();
@@ -44,7 +45,11 @@ public class ProcessMenu {
             case "3":
                 SearchProduct.SearchMenu(login);
                 break;
+            case "4":
+                ShowProduct.show(login);
+                break;
             case "0":
+                login.connection.close();
                 System.exit(0);
                 break;
             default:

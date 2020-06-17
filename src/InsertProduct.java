@@ -11,7 +11,7 @@ public class InsertProduct {
     static String callStoreProcedure = "";
 
     public static void insertProduct(Login login) throws UnsupportedEncodingException {
-        Program.clrscr();
+        ClearScreen.clrscr();
         String callStoreProcedure = "{call inputInfoProduct(?,?,?,?,?)}";
         CallableStatement cstm = null;
         System.out.println("================================");

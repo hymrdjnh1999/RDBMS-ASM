@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "CodeLens (Launch) - Program",
+            "request": "launch",
+            "mainClass": "Program",
+            "projectName": "RDBMS_ASM_8e6958e7"
+        },
+        {
+            "type": "java",
             "name": "CodeLens (Launch) - tets",
             "request": "launch",
             "mainClass": "tets",

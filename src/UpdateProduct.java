@@ -15,7 +15,7 @@ public class UpdateProduct {
     static void updateMenu(Login li) throws UnsupportedEncodingException, NumberFormatException, SQLException {
         login = li;
         while (true) {
-            Program.clrscr();
+            ClearScreen.clrscr();
             System.out.println("|==================================================|");
             System.out.println("| Update Product Infomation with Product ID        |");
             System.out.println("|==================================================|");
@@ -120,7 +120,7 @@ public class UpdateProduct {
     }
 
     static void updateProductInfo(Login log, Integer select) {
-        Program.clrscr();
+        ClearScreen.clrscr();
         System.out.println("================================");
         System.out.println("update product information");
         System.out.println("================================");

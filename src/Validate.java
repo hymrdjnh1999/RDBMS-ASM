@@ -60,4 +60,18 @@ public class Validate {
         return connection;
     }
 
+    public static String validateInputSelect() {
+        String select = "";
+        do {
+            select = isNullString();
+
+            if (select.equalsIgnoreCase("next") || select.equalsIgnoreCase("quit"))
+                break;
+            else
+                System.out.print("Please exactly select : ");
+        } while (!select.equalsIgnoreCase("next") || !select.equalsIgnoreCase("quit"));
+
+        return select;
+    }
+
 }

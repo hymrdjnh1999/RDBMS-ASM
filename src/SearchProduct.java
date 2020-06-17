@@ -14,7 +14,7 @@ public class SearchProduct {
     static void SearchMenu(Login li) throws UnsupportedEncodingException, NumberFormatException, SQLException {
         login = li;
         while (true) {
-            Program.clrscr();
+            ClearScreen.clrscr();
             System.out.println("|==============================================|");
             System.out.println("|               Search product menu            |");
             System.out.println("|==============================================|");
@@ -110,11 +110,11 @@ public class SearchProduct {
         ResultSet rs = call.executeQuery();
         Integer rowsCount = 0;
         System.out.println(
-                "=================================================================================================================================================");
+                "============================================================================================================================================");
         System.out.printf("| %-20s | %-15s | %-15s | %-15s | %-10s | %-10s | %-20s | %-10s | \n", "Category",
                 "Name Sort", "Root Price", "Sale Price", "Quantity", "Sold", "Des Sort", "Rate");
         System.out.println(
-                "=================================================================================================================================================");
+                "============================================================================================================================================");
         while (rs.next()) {
             System.out.printf("| %-20s | %-15s | %-15.0f | %-15.0f | %-10d | %-10d | %-20s | %-10.1f |\n",
                     rs.getString(1), rs.getString(2), rs.getDouble(3), rs.getDouble(4), rs.getInt(5), rs.getInt(6),
@@ -122,7 +122,7 @@ public class SearchProduct {
             rowsCount++;
         }
         System.out.println(
-                "=================================================================================================================================================");
+                "============================================================================================================================================");
         System.out.println(rowsCount + " row(s) returned!");
         System.out.print("Enter any key to back main menu...");
         scanner.nextLine();
