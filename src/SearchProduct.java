@@ -53,15 +53,12 @@ public class SearchProduct {
         productName = Validate.isNullString();
         switch (select) {
             case 1:
-                callStoreProcedure = "{call searchProductByName(?)}";
                 break;
             case 2:
-                callStoreProcedure = "{call searchProductbyCategoryName(?,?)}";
                 System.out.print("Category Name : ");
                 categoryName = Validate.isNullString();
                 break;
             case 3:
-                callStoreProcedure = "{call searchProductbyPriceRange(?,?,?,?)}";
                 System.out.print("Category Name : ");
                 categoryName = Validate.isNullString();
                 System.out.print("Product price range start  : ");
@@ -80,13 +77,16 @@ public class SearchProduct {
             callableStatement = login.connection.prepareCall(sql);
             switch (select) {
                 case 1:
+                    callStoreProcedure = "{call searchProductByName(?)}";
                     callableStatement.setString(1, productName);
                     break;
                 case 2:
+                    callStoreProcedure = "{call searchProductbyCategoryName(?,?)}";
                     callableStatement.setString(1, categoryName);
                     callableStatement.setString(2, productName);
                     break;
                 case 3:
+                    callStoreProcedure = "{call searchProductbyPriceRange(?,?,?,?)}";
                     callableStatement.setString(1, productName);
                     callableStatement.setString(2, categoryName);
                     if (productEndRange > productStartRange) {
@@ -112,7 +112,7 @@ public class SearchProduct {
         System.out.println(
                 "============================================================================================================================================");
         System.out.printf("| %-20s | %-15s | %-15s | %-15s | %-10s | %-10s | %-20s | %-10s | \n", "Category",
-                "Name Sort", "Root Price", "Sale Price", "Quantity", "Sold", "Des Sort", "Rate");
+                "Sort Name", "Root Price", "Sale Price", "Quantity", "Sold", "Sort Description", "Rate");
         System.out.println(
                 "============================================================================================================================================");
         while (rs.next()) {

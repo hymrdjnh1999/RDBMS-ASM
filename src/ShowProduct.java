@@ -22,7 +22,7 @@ public class ShowProduct {
                 System.out.println(
                         "============================================================================================================================================");
                 System.out.printf("| %-20s | %-15s | %-15s | %-15s | %-10s | %-10s | %-20s | %-10s | \n", "Category",
-                        "Name Sort", "Root Price", "Sale Price", "Quantity", "Sold", "Des Sort", "Rate");
+                        "Sort Name", "Root Price", "Sale Price", "Quantity", "Sold", "Sort Description", "Rate");
                 System.out.println(
                         "============================================================================================================================================");
                 while (rs.next()) {
