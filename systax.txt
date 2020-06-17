@@ -1,3 +1,3 @@
 1. javac -cp src/ src/app/*.java -d bin
 2. jar -cvfm Program.jar mainfest.txt -C bin/ . src/
-3. java -jar Progream.jar
+3. java -jar Program.jar
