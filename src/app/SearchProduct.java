@@ -119,8 +119,8 @@ public class SearchProduct {
                 "======================================================================================================================================================");
         while (rs.next()) {
             System.out.printf("| %-30s | %-15s | %-15.0f | %-15.0f | %-10d | %-10d | %-20s | %-10.1f |\n",
-                    rs.getString(1), rs.getString(2), rs.getDouble(3), rs.getDouble(4), rs.getInt(5), rs.getInt(6),
-                    rs.getString(7), rs.getDouble(8));
+                    rs.getString(1), rs.getString(2).substring(1, 10).concat("..."), rs.getDouble(3), rs.getDouble(4),
+                    rs.getInt(5), rs.getInt(6), rs.getString(7).substring(1, 10).concat("..."), rs.getDouble(8));
             rowsCount++;
         }
         System.out.println(
