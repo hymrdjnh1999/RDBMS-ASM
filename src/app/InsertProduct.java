@@ -33,6 +33,7 @@ public class InsertProduct {
             System.out.println("Enter any key to back...");
             scanner.nextLine();
         } catch (SQLException e) {
+            e.printStackTrace();
             System.out.println("(0) rows add");
             System.out.println("Enter any key to back...");
             scanner.nextLine();

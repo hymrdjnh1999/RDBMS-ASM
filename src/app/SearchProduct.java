@@ -55,12 +55,15 @@ public class SearchProduct {
         productName = Validate.isNullString();
         switch (select) {
             case 1:
+                callStoreProcedure = "{call searchProductByName(?)}";
                 break;
             case 2:
+                callStoreProcedure = "{call searchProductbyCategoryName(?,?)}";
                 System.out.print("Category Name : ");
                 categoryName = Validate.isNullString();
                 break;
             case 3:
+                callStoreProcedure = "{call searchProductbyPriceRange(?,?,?,?)}";
                 System.out.print("Category Name : ");
                 categoryName = Validate.isNullString();
                 System.out.print("Product price range start  : ");
@@ -79,16 +82,13 @@ public class SearchProduct {
             callableStatement = login.connection.prepareCall(sql);
             switch (select) {
                 case 1:
-                    callStoreProcedure = "{call searchProductByName(?)}";
                     callableStatement.setString(1, productName);
                     break;
                 case 2:
-                    callStoreProcedure = "{call searchProductbyCategoryName(?,?)}";
                     callableStatement.setString(1, categoryName);
                     callableStatement.setString(2, productName);
                     break;
                 case 3:
-                    callStoreProcedure = "{call searchProductbyPriceRange(?,?,?,?)}";
                     callableStatement.setString(1, productName);
                     callableStatement.setString(2, categoryName);
                     if (productEndRange > productStartRange) {
@@ -112,19 +112,19 @@ public class SearchProduct {
         ResultSet rs = call.executeQuery();
         Integer rowsCount = 0;
         System.out.println(
-                "============================================================================================================================================");
-        System.out.printf("| %-20s | %-15s | %-15s | %-15s | %-10s | %-10s | %-20s | %-10s | \n", "Category",
+                "======================================================================================================================================================");
+        System.out.printf("| %-30s | %-15s | %-15s | %-15s | %-10s | %-10s | %-20s | %-10s | \n", "Category",
                 "Sort Name", "Root Price", "Sale Price", "Quantity", "Sold", "Sort Description", "Rate");
         System.out.println(
-                "============================================================================================================================================");
+                "======================================================================================================================================================");
         while (rs.next()) {
-            System.out.printf("| %-20s | %-15s | %-15.0f | %-15.0f | %-10d | %-10d | %-20s | %-10.1f |\n",
+            System.out.printf("| %-30s | %-15s | %-15.0f | %-15.0f | %-10d | %-10d | %-20s | %-10.1f |\n",
                     rs.getString(1), rs.getString(2), rs.getDouble(3), rs.getDouble(4), rs.getInt(5), rs.getInt(6),
                     rs.getString(7), rs.getDouble(8));
             rowsCount++;
         }
         System.out.println(
-                "============================================================================================================================================");
+                "======================================================================================================================================================");
         System.out.println(rowsCount + " row(s) returned!");
         System.out.print("Enter any key to back main menu...");
         scanner.nextLine();
